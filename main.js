@@ -2,6 +2,8 @@
     /*
      * Setup
      */
+
+    // run 10 test while increasing context.sarAccel
     for (let i = 0.001, p = Promise.resolve(); i < 0.01; i += 0.001) {
         p = p.then(_ => {
             setParameterInCode('context.sarAccel', i);
