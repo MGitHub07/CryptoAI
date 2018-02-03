@@ -59,7 +59,7 @@
                 }
                 return wait(500).then(() => loop());
             }).then((a, b) => {
-                console.log('finished', Math.round((performance.now() - window.startTime) / 1000, 1), /Bot Gewinn_*:.*/.exec(log)[0]);
+                console.log('finished in', Math.round((performance.now() - window.startTime) / 1000, 1) + 's', /Bot Gewinn_*:.*/.exec(log)[0]);
                 return Promise.resolve();
             });
     }
