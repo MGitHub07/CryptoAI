@@ -3,10 +3,25 @@
      * Setup
      */
 
+    var startDate = moment('01.01.18', 'DD.MM.YY')
+
+    /*
+        //definition for parameter testing
+        var baseValue = 0.00580;
+        var stepCount = 10;
+        var lowValue = baseValue * 0.99;
+        var highValue = baseValue * 0.01;
+        var stepValue = (highValue - lowValue) / stepCount;
+
+        console.log(baseValue, lowValue, highValue, stepValue);*/
+
     // run 10 test while increasing context.sarAccel
-    for (let i = 0.001, p = Promise.resolve(); i < 0.01; i += 0.001) {
+    for (let dayCount = 0, p = Promise.resolve(); dayCount <= 30; dayCount += 1) {
         p = p.then(_ => {
-            setParameterInCode('context.sarAccel', i);
+
+            $('#date-start input').val(startDate.format('YYYY-MM-DD HH:mm'))
+            startDate.add(1, 'days');
+            $('#date-end input').val(startDate.format('YYYY-MM-DD HH:mm'))
             return runTest();
         });
     }
@@ -15,7 +30,6 @@
      * function definitions
      */
 
-    wait = (ms) => new Promise((resolve, reject) => setTimeout(resolve, ms));
 
     setParameterInCode = (parameter, value) => {
         var code = ace.edit('editor').getValue();
@@ -59,7 +73,7 @@
                 }
                 return wait(500).then(() => loop());
             }).then((a, b) => {
-                console.log('finished in', Math.round((performance.now() - window.startTime) / 1000, 1) + 's', /Bot Gewinn_*:.*/.exec(log)[0]);
+                console.log("\t" + startDate.format() + "\t", /BOT PROFIT SUM__:.*/g.exec(log)[0], "\t", /B&H PROFIT SUM__:.*/g.exec(log)[0]);
                 return Promise.resolve();
             });
     }
